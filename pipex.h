@@ -6,22 +6,26 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:31:10 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/23 13:15:19 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/02/25 10:37:54 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-# include <stdio.h>
+
 # include <unistd.h>
-// STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO
+// STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO, access(): F_OK, X_OK, fork(), execve(), pipe(), dup2()
 
 # include <stdlib.h>
-# include <signal.h>
+// malloc(), calloc(), free()
 
 # include <fcntl.h>
 // O_RDONLY (read only), O_RDWR (read and write), O_CREAT(create), O_TRUNC (will overwrite if the file already exists)
+// open(), close()
+
 # include <sys/types.h>
+// pid_t, size_t
+
 # include "../libft/libft.h"
 
 typedef struct s_data
@@ -45,5 +49,6 @@ int		px_strncmp(const char *s1, const char *s2, size_t n);
 size_t	px_strlen(const char *str);
 char	*px_calloc(size_t count, size_t size);
 size_t	px_strlcpy(char *dest, const char *src, size_t size);
+char	*px_strjoin(char const *s1, char const *s2);
 
 #endif

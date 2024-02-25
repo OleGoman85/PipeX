@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 07:20:08 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/23 13:14:11 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/02/25 10:36:07 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,29 @@ void	process(char *command, t_data *data)
 	
 	i = 0;
 	get_path(data, data->env);
+	data->cmd_opt = px_split(command, ' ');
+	while (data->path[i])
+	{
+		hold = px_strjoin("/", data->cmd_opt[0]);
+		pth_cmd = px_strjoin(data->path[i], hold);
+		if (!access(pth_cmd, F_OK))
+		{
+			if(!access(pth_cmd, X_OK))
+				execve(pth_cmd, data->cmd_opt, data->env);
+			else
+				path_errors(7);
+		}
+		free(hold);
+		free(pth_cmd);
+		i++;
+	}
+	path_errors(8);
 }
 
 
+// Например, если data->cmd_opt[0] содержит "cat", и data->path[i] содержит "/usr/bin", то после выполнения строки hold = ft_strjoin("/", data->cmd_opt[0]); переменная hold будет равна "/cat", и после выполнения строки pth_cmd = ft_strjoin(data->path[i], hold); переменная pth_cmd будет равна "/usr/bin/cat".
 
-
-
-//ft_strncmp ///
-//ft_calloc ///
-//ft_strlen ////
-//ft_strlcpy ///
-//ft_split
-//ft_strjoin
-
-
-///// prodolzit razbirat split ft_alloc_all////////
+//execve(pth_cmd, data->cmd_opt, data->env);
+// pth_cmd: путь к исполняемому файлу.
+// data->cmd_opt: массив строк, представляющих аргументы для новой программы. Первый аргумент должен быть именем программы.
+// data->env: массив строк, представляющих переменные окружения для новой программы.

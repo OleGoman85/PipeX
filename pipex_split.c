@@ -6,28 +6,28 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:04:36 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/23 14:01:24 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/02/24 09:39:19 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char *px_word_alloc(char *path_line, char c)
+static char	*px_word_alloc(char *path_line, char c)
 {
 	int		len;
 	char	*word_alloc;
 
 	len = 0;
-	while (path_line[len] != c && path_line[len]!= '\0')
+	while (path_line[len] != c && path_line[len] != '\0')
 		len++;
 	word_alloc = px_calloc(len + 1, sizeof(char));
-	while (*path_line != c && *path_line!= '\0')
+	while (*path_line != c && *path_line != '\0')
 		*word_alloc++ = *path_line++;
 	*word_alloc = '\0';
 	return (word_alloc - (len + 1));
 }
 
-static void px_split_and_alloc(char *path_line, char c, int word, char **path_arr)
+static void	px_split_and_alloc(char *path_line, char c, int word, char **path_arr)
 {
 	while (*path_line)
 	{
@@ -52,9 +52,9 @@ static void px_split_and_alloc(char *path_line, char c, int word, char **path_ar
 	path_arr[word] = 0;
 }
 
-static int px_strcount(char *str, char c)
+static int	px_strcount(char *str, char c)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (*str)
@@ -70,11 +70,11 @@ static int px_strcount(char *str, char c)
 	return (count);
 }
 
-char **px_split(char const *myPath, char c)
+char	**px_split(char const *myPath, char c)
 {
-	int word;
-	char **path_arr_empty;
-	char *myPath_line;
+	int		word;
+	char	**path_arr_empty;
+	char	*myPath_line;
 
 	if (myPath == NULL)
 		return (NULL);
@@ -96,5 +96,3 @@ char **px_split(char const *myPath, char c)
 // ft_alloc_all(str, c, w, ptr);
 // myPath_line - stroka PATHA= (a tochnej, vse chto pozle)
 // path_arr - massiv ukazatelej, kuda budut zapisani razdelennie stroki(poka pustoj)
-
-

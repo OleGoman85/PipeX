@@ -6,13 +6,13 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:54:13 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/23 07:48:36 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/02/24 10:32:30 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./pipex.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	
@@ -23,7 +23,7 @@ int main(int ac, char **av, char **env)
 			main_errors(4);
 		data.file_out = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0664);
 		if (data.file_out < 0)
-		    main_errors(5);
+			main_errors(5);
 		data.av = &av[1]; // comand line arguments
 		data.env = env; // set environment
 		processes_making(&data);
