@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:19:37 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/25 10:50:18 by ogoman           ###   ########.fr       */
+/*   Created: 2024/02/27 10:51:31 by ogoman            #+#    #+#             */
+/*   Updated: 2024/02/27 13:36:35 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	main_errors(int error)
 {
@@ -31,12 +31,12 @@ void	main_errors(int error)
 	}
 	if (error == 4)
 	{
-		perror("files in file to read");
+		perror("read failure");
 		exit(4);
 	}
 	if (error == 5)
 	{
-		perror("file out fails to create");
+		perror("creation failure");
 		exit(5);
 	}
 }
@@ -55,7 +55,7 @@ void	path_errors(int error)
 	}
 	if (error == 8)
 	{
-		perror("Invalid command! :/\n");;
+		perror("Invalid command! :/\n");
 		exit(8);
 	}
 	if (error == 9)

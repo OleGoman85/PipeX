@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 12:54:13 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/24 10:32:30 by ogoman           ###   ########.fr       */
+/*   Created: 2024/02/27 10:50:53 by ogoman            #+#    #+#             */
+/*   Updated: 2024/02/27 10:50:56 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex.h"
+#include "../pipex.h"
 
 int	main(int ac, char **av, char **env)
 {
@@ -32,11 +32,3 @@ int	main(int ac, char **av, char **env)
 		main_errors(3);
 	return (0);
 }
-
-// data.env pointer to array of pointers to strings
-// data.env = env;
-// env[0] = "PATH="
-// env[1] = "SHELL="
-// env[2] = "USER="
-// env[3] = "TERM="
-// ...

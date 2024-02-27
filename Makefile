@@ -3,41 +3,85 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlazzare <mlazzare@student.s19.be>         +#+  +:+       +#+         #
+#    By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/07/20 17:28:02 by mlazzare          #+#    #+#              #
-#    Updated: 2021/08/02 14:12:40 by mlazzare         ###   ########.fr        #
+#    Created: 2024/02/26 07:05:18 by ogoman            #+#    #+#              #
+#    Updated: 2024/02/27 13:13:50 by ogoman           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Target
 NAME = pipex
 
-CC = gcc -g3
+# Command for copying files
+CC = cc
+
+# Header
+HEADER = ./pipex.h
+
+# Compilation flags
 CFLAGS = -Wall -Wextra -Werror
 
-INC = ./inc/pipex.h \
+# Command for deleting files and directories
+RM = rm -rf
 
-SRC = \
-	./src/main.c \
-	./src/pipex.c \
-	./src/pipex_utils.c \
-	./src/string_utils.c \
-	./src/ft_splitpath.c \
-	./src/free.c \
+# Source files
+SRCS = $(addprefix main_functions/, main.c process_utils.c process_creating.c errors.c)
 
-OBJ = $(SRC:.c=.o)
+# Helper functions
+HELP_SRCS = $(addprefix helper_functions/, px_bzero.c px_calloc.c px_split.c \
+						px_strjoin.c px_strlcpy.c px_strlen.c px_strncmp.c)
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+# Directory with the source files of libft
+LIBFT_DIR = ./libft
 
-all: $(NAME)
+# Path to the libft library and its name
+LIBFT = libft/libft.a
 
+# Object files obtained from source files
+OBJS = $(SRCS:.c=.o)
+
+# Object files obtained from help_sources files
+HELP_OBJS = $(HELP_SRCS:.c=.o)
+
+BGreen=\033[1;32m
+BRed=\033[1;31m
+
+# Default "all" target
+all : tag $(LIBFT) $(NAME)
+
+tag:
+	@echo "$(BGreen)"
+
+# Rule for building libft
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+
+# Rule for building the target file
+$(NAME): $(OBJS) $(HELP_OBJS)
+	@echo "\nBuilding target file: $(NAME)"
+	@$(CC) $(OBJS) $(HELP_OBJS) -o $(NAME)
+
+%.o: %.c $(HEADER)
+	@/bin/echo -n "..."
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(HEADER)
+
+# Rule for cleaning object files
 clean:
-	rm -rf $(OBJ)
+	@echo "$(BRed)Cleaning object files"
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(RM) $(OBJS) $(HELP_OBJS)
+	@echo ".........................."
 
-fclean: clean
-	rm -rf $(NAME)
+# Rule for full clean (including libft)
+fclean:
+	@echo "$(BRed)Cleaning object files and ./pipex"
+	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(RM) $(NAME) $(OBJS) $(HELP_OBJS)
 
+# Rule for recompiling
 re: fclean all
 
-.PHONY: all clean fclean re
+# Declare targets that are not real files
+.PHONY: all bonus tag clean fclean re
+
