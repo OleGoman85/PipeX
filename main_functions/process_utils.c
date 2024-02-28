@@ -6,17 +6,27 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:52:32 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/27 10:52:34 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/02/28 11:48:19 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+/*
+	static void	get_path(t_data *data, char **env)
+
+		* This function extracts the PATH environment variable from the given
+			environment array.
+		* It iterates through the environment array to find the PATH variable.
+		* Once found, it allocates memory for a copy of the PATH string and
+			splits it into individual paths using the px_split function.
+		* The resulting paths are stored in the data->path array.
+*/
 static void	get_path(t_data *data, char **env)
 {
 	int		i;
 	int		j;
-	char	*ptr;
+	char	*path_line;
 
 	i = 0;
 	j = 5;
@@ -24,17 +34,36 @@ static void	get_path(t_data *data, char **env)
 		i++;
 	if (!env[i])
 		exit(2);
-	ptr = px_calloc(px_strlen(&env[i][j]) + 1, sizeof(char));
-	px_strlcpy(ptr, &env[i][j], px_strlen(&env[i][j]) + 1);
-	data->path = px_split(ptr, ':');
+	path_line = px_calloc(px_strlen(&env[i][j]) + 1, sizeof(char));
+	px_strlcpy(path_line, &env[i][j], px_strlen(&env[i][j]) + 1);
+	data->path = px_split(path_line, ':');
 }
 
+/*
+	void	process(char *command, t_data *data)
+
+	* This function executes a given command by searching for its executable
+		file in the directories listed in the PATH environment variable.
+	* It first calls the get_path function to obtain the list of
+		directories in the PATH.
+	* Then, it splits the command string into individual command and argument
+		tokens using the px_split function.
+	* Next, it iterates through each directory in the PATH array and constructs
+			the full path to the command executable by appending the command
+			name to each directory path.
+	* For each constructed path, it checks if the file exists (F_OK) and
+			is executable (X_OK) using the access function.
+	* If a valid executable file is found, it executes
+			the command using the execve function.
+	* If no executable file is found in any directory, it calls the path_errors
+		function to handle the error case.
+*/
 void	process(char *command, t_data *data)
 {
 	int		i;
 	char	*pth_cmd;
 	char	*hold;
-	
+
 	i = 0;
 	get_path(data, data->env);
 	data->cmd_opt = px_split(command, ' ');
@@ -44,7 +73,7 @@ void	process(char *command, t_data *data)
 		pth_cmd = px_strjoin(data->path[i], hold);
 		if (!access(pth_cmd, F_OK))
 		{
-			if(!access(pth_cmd, X_OK))
+			if (!access(pth_cmd, X_OK))
 				execve(pth_cmd, data->cmd_opt, data->env);
 			else
 				path_errors(7);
@@ -55,16 +84,3 @@ void	process(char *command, t_data *data)
 	}
 	path_errors(8);
 }
-
-//     str = (char *) s;: Эта строка приводит указатель s к типу char * и присваивает его переменной str. Поскольку параметр s объявлен как char const *, он указывает на строку, которая не может быть изменена. Однако функция ft_alloc_all принимает аргумент типа char *, поэтому мы должны создать временную переменную str, чтобы мы могли изменять ее внутри функции ft_alloc_all, если это необходимо.
-
-//     ptr = ft_calloc((ft_strcount(str, c) + 1), sizeof(char *));: Эта строка выделяет память под массив указателей ptr, который будет содержать разделенные подстроки. Размер массива вычисляется как количество подстрок плюс один (для завершающего нулевого указателя). Функция ft_strcount используется для подсчета количества подстрок в строке str, разделенных символом c.
-
-//     ft_alloc_all(str, c, w, ptr);: Эта строка вызывает функцию ft_alloc_all, которая разбивает строку str на подстроки, используя разделитель c, и выделяет память для каждой из этих подстрок. Результаты помещаются в массив указателей ptr.
-
-// Таким образом, эти три строки выполняют необходимые операции для разделения строки s на подстроки, используя символ c в качестве разделителя, и возвращают массив указателей на эти подстроки.
-
-// ft_alloc_all(str, c, w, ptr);
-// str - stroka PATHA= (a tochnej, vse chto pozle)
-// ptr - massiv ukazatelej, kuda budut zapisani rzdelennie stroki(poka pustoj)
-// c - ':'

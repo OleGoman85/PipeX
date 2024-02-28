@@ -6,7 +6,7 @@
 #    By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 07:05:18 by ogoman            #+#    #+#              #
-#    Updated: 2024/02/27 13:13:50 by ogoman           ###   ########.fr        #
+#    Updated: 2024/02/28 07:40:39 by ogoman           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ OBJS = $(SRCS:.c=.o)
 # Object files obtained from help_sources files
 HELP_OBJS = $(HELP_SRCS:.c=.o)
 
+# ANSI Escape Codes
 BGreen=\033[1;32m
 BRed=\033[1;31m
 
@@ -71,7 +72,7 @@ clean:
 	@echo "$(BRed)Cleaning object files"
 	@$(MAKE) clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS) $(HELP_OBJS)
-	@echo ".........................."
+	@echo ".......................... READY"
 
 # Rule for full clean (including libft)
 fclean:
