@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:31:10 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/29 07:25:29 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/01 13:13:31 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ O_TRUNC (will overwrite if the file already exists), open(), close()
 
 typedef struct s_data
 {
-	pid_t	pid;
+	pid_t	pid1;
+	pid_t	pid2;
 	char	**av;
 	char	**env;
 	char	**path;
@@ -56,6 +57,8 @@ size_t	px_strlen(const	char *str);
 size_t	px_strlcpy(char *dst, const char *src, size_t n);
 int		px_strncmp(const char *s1, const char *s2, size_t n);
 int		px_strcmp(const char *s1, const char *s2);
+void	child_pid1(t_data *data);
+void	child_pid2(t_data *data);
 
 #endif
 
@@ -69,3 +72,25 @@ int		px_strcmp(const char *s1, const char *s2);
 	int		file_in; file descriptor for the input file (read)
 	int		file_out; file descriptor for the output file (write)
 */
+
+
+
+
+
+
+
+// # ifndef FD_FAILURE
+// #  define FD_FAILURE 1
+// # endif
+
+// # ifndef CMD_PD_FAILURE
+// #  define CMD_PD_FAILURE 126
+// # endif
+
+// # ifndef CMD_NF_FAILURE
+// #  define CMD_NF_FAILURE 127
+// # endif
+
+// # ifndef EXECVE_FAILURE
+// #  define EXECVE_FAILURE 127
+// # endif
