@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:54:54 by ogoman            #+#    #+#             */
-/*   Updated: 2024/03/01 13:26:20 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/02 13:12:19 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 void	processes_making(t_data *data)
 {
+	int	status;
+
 	if (pipe(data->fd) < 0)
 	{
 		close(data->file_in);
@@ -28,35 +30,19 @@ void	processes_making(t_data *data)
 	}
 	data->pid1 = fork();
 	if (data->pid1 < 0)
-	{
-		close(data->file_in);
-		close(data->file_out);
-		close(data->fd[0]);
-		close(data->fd[1]);
-		main_errors(2);
-	}
+		close_all(data);
 	if (data->pid1 == 0)
-	{
 		child_pid1(data);
-	}
 	data->pid2 = fork();
 	if (data->pid2 < 0)
-	{
-		close(data->file_in);
-		close(data->file_out);
-		close(data->fd[0]);
-		close(data->fd[1]);
-		// close(data->pid1);
-		main_errors(2);
-	}
+		close_all(data);
 	if (data->pid2 == 0)
-	{
 		child_pid2(data);
-	}
 	close(data->fd[0]);
 	close(data->fd[1]);
 	waitpid(data->pid1, NULL, 0);
-	waitpid(data->pid2, //int* &status (return status), 0);
+	waitpid(data->pid2, &status, 0);
+	data->status = status;
 }
 /*
 	Creating processes using pipe and fork.
@@ -92,6 +78,15 @@ void	child_pid2(t_data *data)
 	dup2(data->fd[0], STDIN_FILENO);
 	close(data->fd[0]);
 	process(data->av[2], data);
+}
+
+void	close_all(t_data *data)
+{
+	close(data->file_in);
+	close(data->file_out);
+	close(data->fd[0]);
+	close(data->fd[1]);
+	main_errors(2);
 }
 
 // void	processes_making(t_data *data)

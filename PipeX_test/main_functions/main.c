@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:50:53 by ogoman            #+#    #+#             */
-/*   Updated: 2024/03/01 12:41:44 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:15:47 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ int	main(int ac, char **av, char **env)
 	}
 	else
 		main_errors(3);
-	return (0);
+	return (data.status);
 }
