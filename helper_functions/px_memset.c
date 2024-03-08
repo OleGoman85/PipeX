@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_strlcpy.c                                       :+:      :+:    :+:   */
+/*   px_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 11:00:14 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/28 11:50:26 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/24 08:28:48 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:28:55 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-size_t	px_strlcpy(char *dst, const char *src, size_t n)
+void	*px_memset(void *ptr, int value, size_t num)
 {
-	unsigned int	i;
+	unsigned char	*p;
+	unsigned char	val;
+	size_t			i;
 
+	p = ptr;
 	i = 0;
-	if (n == 0)
-		return (px_strlen(src));
-	while (src[i] && n - 1 > i)
+	val = (unsigned char) value;
+	while (i < num)
 	{
-		dst[i] = src[i];
+		p[i] = val;
 		i++;
 	}
-	return (px_strlen(src));
+	return (ptr);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 10:57:26 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/28 11:49:18 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/24 11:03:39 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:28:30 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	px_bzero(void *s, size_t n)
 {
-	unsigned int	i;
-	char			*s1;
+	unsigned char	*p;
+	size_t			i;
 
+	p = s;
 	i = 0;
-	s1 = (char *)s;
-	while (n > i)
+	while (i < n)
 	{
-		s1[i] = 0;
+		p[i] = 0;
 		i++;
 	}
 }

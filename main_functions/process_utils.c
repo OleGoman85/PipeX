@@ -6,58 +6,33 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:52:32 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/29 09:36:06 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:07:45 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-/*
-	static void	get_path(t_data *data, char **env)
-
-		* This function extracts the PATH environment variable from the given
-			environment array.
-		* It iterates through the environment array to find the PATH variable.
-		* Once found, it allocates memory for a copy of the PATH string and
-			splits it into individual paths using the px_split function.
-		* The resulting paths are stored in the data->path array.
-*/
 static void	get_path(t_data *data, char **env)
 {
 	int		i;
-	int		j;
-	char	*path_line;
+	char	*path_value;
 
 	i = 0;
-	j = 5;
-	while (env[i] && px_strncmp(env[i], "PATH=", j))
+	while (env[i])
+	{
+		if (px_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path_value = env[i] + 5;
+			data->path = px_split(path_value, ':');
+			if (data->path == NULL)
+				path_errors(6);
+			return ;
+		}
 		i++;
-	if (!env[i])
-		exit(2);
-	path_line = px_calloc(px_strlen(&env[i][j]) + 1, sizeof(char));
-	px_strlcpy(path_line, &env[i][j], px_strlen(&env[i][j]) + 1);
-	data->path = px_split(path_line, ':');
+	}
+	data->path = NULL;
 }
 
-/*
-	void	process(char *command, t_data *data)
-
-	* This function executes a given command by searching for its executable
-		file in the directories listed in the PATH environment variable.
-	* It first calls the get_path function to obtain the list of
-		directories in the PATH.
-	* Then, it splits the command string into individual command and argument
-		tokens using the px_split function.
-	* Next, it iterates through each directory in the PATH array and constructs
-			the full path to the command executable by appending the command
-			name to each directory path.
-	* For each constructed path, it checks if the file exists (F_OK) and
-			is executable (X_OK) using the access function.
-	* If a valid executable file is found, it executes
-			the command using the execve function.
-	* If no executable file is found in any directory, it calls the path_errors
-		function to handle the error case.
-*/
 void	process(char *command, t_data *data)
 {
 	int		i;
@@ -67,20 +42,42 @@ void	process(char *command, t_data *data)
 	i = 0;
 	get_path(data, data->env);
 	data->cmd_opt = px_split(command, ' ');
+	if (data->cmd_opt == NULL)
+		path_errors(9);
 	while (data->path[i])
 	{
 		slash_command = px_strjoin("/", data->cmd_opt[0]);
 		pth_cmd = px_strjoin(data->path[i], slash_command);
-		if (!access(pth_cmd, F_OK))
+		if (access(pth_cmd, F_OK) == 0)
 		{
-			if (!access(pth_cmd, X_OK))
+			if (access(pth_cmd, X_OK) == 0)
 				execve(pth_cmd, data->cmd_opt, data->env);
-			else
-				path_errors(7);
+			path_errors(7);
 		}
+		i++;
 		free(slash_command);
 		free(pth_cmd);
-		i++;
 	}
 	path_errors(8);
 }
+
+// static void	get_path(t_data *data, char **env)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*path_line;
+// 	char	*path;
+
+// 	i = 0;
+// 	j = 5;
+// 	while (env[i] && px_strncmp(env[i], "PATH=", j))
+// 		i++;
+// 	if (!env[i])
+// 		path = "";
+// 	else
+// 		path = env[i][j];
+// 	// path_line = px_calloc(px_strlen(path) + 1, sizeof(char));
+// 	// px_strlcpy(path_line, &env[i][j], px_strlen(&env[i][j]) + 1);
+// 	data->path = px_split(path_line, ':');
+// 	//if ! split -> error and stop
+// }

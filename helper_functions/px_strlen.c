@@ -5,21 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 11:01:00 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/28 11:50:28 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/24 07:42:42 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:35:36 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-size_t	px_strlen(const	char *str)
+size_t	px_strlen(const char *s)
 {
-	int	i;
+	size_t	length;
 
-	i = 0;
-	while (str[i] != '\0')
+	length = 0;
+	while (s[length] != '\0')
 	{
-		i++;
+		length++;
 	}
-	return (i);
+	return (length);
 }

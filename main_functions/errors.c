@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:51:31 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/28 13:36:11 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:12:02 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	main_errors(int error)
 	}
 	if (error == 3)
 	{
-		perror("incorrect number of arguments");
+		perror("incorrect number of arguments\n");
 		exit(3);
 	}
 	if (error == 4)
@@ -45,27 +45,22 @@ void	path_errors(int error)
 {
 	if (error == 6)
 	{
-		perror("path creation failed");
+		perror("Could not split path(get_path)");
 		exit(6);
+	}
+	if (error == 9)
+	{
+		perror("Could not split path(process)");
+		exit(9);
 	}
 	if (error == 7)
 	{
-		perror("path file not found : /\n");
+		perror("path file not found");
 		exit(7);
 	}
 	if (error == 8)
 	{
-		perror("Invalid command! :/\n");
+		perror("Invalid command!");
 		exit(8);
-	}
-	if (error == 9)
-	{
-		perror("px_calloc failed");
-		exit(9);
-	}
-	if (error == 10)
-	{
-		perror("px_strlen failed");
-		exit(10);
 	}
 }

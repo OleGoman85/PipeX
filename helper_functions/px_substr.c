@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   px_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 11:26:21 by ogoman            #+#    #+#             */
-/*   Updated: 2023/11/15 15:47:12 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/26 16:50:06 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:37:45 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+char	*px_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	char	*p;
-	char	*s;
+	size_t	s_len;
+	char	*substr;
 
-	if (dst == NULL && src == NULL)
-	{
-		return (0);
-	}
-	p = (char *) dst;
-	s = (char *) src;
+	if (s == NULL)
+		return (NULL);
+	s_len = px_strlen(s);
+	if (start >= s_len)
+		return (px_strdup(""));
+	if (len > s_len - start)
+		len = s_len - start;
+	substr = (char *)malloc(len + 1);
+	if (substr == NULL)
+		return (NULL);
 	i = 0;
-	while (i < n)
+	while (i < len)
 	{
-		p[i] = s[i];
+		substr[i] = s[start + i];
 		i++;
 	}
-	return (dst);
+	substr[len] = '\0';
+	return (substr);
 }

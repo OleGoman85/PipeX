@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   px_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 18:10:16 by ogoman            #+#    #+#             */
-/*   Updated: 2023/11/15 16:01:27 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/26 10:23:32 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:30:32 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
 
-int	ft_isdigit(int c)
+void	*px_strcpy(char *dest, const char *src)
 {
-	return (c >= '0' && c <= '9');
+	char		*d;
+	const char	*s;
+
+	d = dest;
+	s = src;
+	if (!dest || !src)
+	{
+		return (NULL);
+	}
+	while (*s)
+	{
+		*d = *s;
+		d++;
+		s++;
+	}
+	*d = '\0';
+	return (dest);
 }

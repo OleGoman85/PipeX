@@ -5,80 +5,83 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 10:58:39 by ogoman            #+#    #+#             */
-/*   Updated: 2024/02/28 11:35:47 by ogoman           ###   ########.fr       */
+/*   Created: 2023/10/27 15:53:39 by ogoman            #+#    #+#             */
+/*   Updated: 2024/03/08 07:27:21 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-static int	px_strcount(char *s, char c)
-{
-	int	len;
+static int	px_word_len(const char *str, char separator);
+static int	px_count_word(char const *str, char separator);
+static char	*px_free_array(char **array, int n);
+char		**px_split(char const *str, char c);
 
-	len = 0;
-	while (*s != 0)
-	{
-		if (*s != c && *s)
-		{
-			len++;
-			while (*s != 0 && *s != c)
-				s++;
-			continue ;
-		}
-		s++;
-	}
-	return (len);
+static char	*px_free_array(char **array, int n)
+{
+	int	i;
+
+	i = n;
+	while (i > 0)
+		free(array[--i]);
+	free(array);
+	return (NULL);
 }
 
-static char	*px_word_alloc(char *s, char c)
+static int	px_count_word(char const *str, char separator)
 {
-	int		len;
-	char	*word;
+	int	word_count;
+	int	current_word_length;
 
-	len = 0;
-	while (s[len] != c && s[len])
-		len++;
-	word = px_calloc(len + 1, sizeof(char));
-	while (*s != c && *s)
-		*word++ = *s++;
-	*word = 0;
-	return (word - len);
-}
-
-static void	px_split_and_alloc(char *str, char c, int word, char **ptr)
-{
+	word_count = 0;
 	while (*str)
 	{
-		if (*str != c && *str)
+		current_word_length = px_word_len(str, separator);
+		if (current_word_length != 0)
 		{
-			ptr[word++] = px_word_alloc(str, c);
-			if (!ptr)
-			{
-				while (word >= 0)
-					free(ptr[word--]);
-				free(ptr);
-			}
-			while (*str != c && *str)
-				str++;
-			continue ;
+			word_count++;
+			str += current_word_length;
 		}
-		str++;
+		else
+			str++;
 	}
-	ptr[word] = NULL;
+	return (word_count);
 }
 
-char	**px_split(char const *s, char c)
+static int	px_word_len(const char *str, char separator)
 {
-	int		word;
-	char	**ptr;
-	char	*str;
+	int	i;
 
-	if (!s)
+	i = 0;
+	while (str[i] && str[i] != separator)
+		i++;
+	return (i);
+}
+
+char	**px_split(char const *str, char c)
+{
+	char	**array;
+	int		word;
+	int		i;
+	int		current_word_length;
+
+	word = px_count_word(str, c);
+	array = (char **) malloc((word + 1) * sizeof (char *));
+	if (array == NULL)
 		return (NULL);
-	word = 0;
-	str = (char *) s;
-	ptr = px_calloc((px_strcount(str, c) + 1), sizeof(char *));
-	px_split_and_alloc(str, c, word, ptr);
-	return (ptr);
+	i = 0;
+	while (i < word)
+	{
+		current_word_length = px_word_len(str, c);
+		if (current_word_length != 0)
+		{
+			array[i] = px_substr(str, 0, current_word_length);
+			if (array[i] == NULL)
+				return ((char **) px_free_array(array, i));
+			i++;
+		}
+		str += (current_word_length + 1);
+	}
+	array[i] = NULL;
+	return (array);
 }
