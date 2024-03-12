@@ -6,7 +6,7 @@
 #    By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 07:05:18 by ogoman            #+#    #+#              #
-#    Updated: 2024/03/08 08:42:26 by ogoman           ###   ########.fr        #
+#    Updated: 2024/03/12 08:36:10 by ogoman           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS = $(addprefix main_functions/, main.c process_utils.c process_creating.c er
 # Helper functions
 HELP_SRCS = $(addprefix helper_functions/, px_strjoin.c px_strlcpy.c px_strncmp.c \
 				px_bzero.c px_calloc.c px_split.c px_strcpy.c px_strdup.c \
-						px_strlen.c px_substr.c px_memset.c)
+						px_strlen.c px_substr.c px_memset.c px_strcmp.c)
 
 # Directory with the source files of libft
 LIBFT_DIR = ./libft
@@ -94,7 +94,7 @@ tag:
 		echo "$(BGreen)"; \
 		echo "qweqwrqeqr    qweeq    qweqwrqeqr    qwewqeewqee    qwers  OG  asdfd"; \
 		echo "asdfhfhsdf    dasdh    asdfhfhsdf    asgfsdfhpvs    xcbvb      asfga"; \
-		echo "akj    jpq    chcvn    akj    jpq    dfgh             asdf    afff"; \
+		echo "akj    jpq             akj    jpq    dfgh             asdf    afff"; \
 		echo "jksdhksdjg    jfgsj    jksdhksdjg    pooifgmsngd        sdfsdfd"; \
 		echo "pogowehoff    pogaa    jksdhksdjg    asdd             asdf    afff"; \
 		echo "zxh           hddfp    jsd           asddasddffa    xcbvb      asfga"; \

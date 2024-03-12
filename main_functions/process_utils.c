@@ -6,12 +6,14 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:52:32 by ogoman            #+#    #+#             */
-/*   Updated: 2024/03/08 09:07:45 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/11 07:09:48 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+/*Get_path: Extracts the PATH environment variable and splits it into
+													individual directories.*/
 static void	get_path(t_data *data, char **env)
 {
 	int		i;
@@ -33,6 +35,8 @@ static void	get_path(t_data *data, char **env)
 	data->path = NULL;
 }
 
+/*process: Executes the specified command by searching for its executable path
+				in the directories listed in the PATH environment variable.*/
 void	process(char *command, t_data *data)
 {
 	int		i;
@@ -60,24 +64,3 @@ void	process(char *command, t_data *data)
 	}
 	path_errors(8);
 }
-
-// static void	get_path(t_data *data, char **env)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*path_line;
-// 	char	*path;
-
-// 	i = 0;
-// 	j = 5;
-// 	while (env[i] && px_strncmp(env[i], "PATH=", j))
-// 		i++;
-// 	if (!env[i])
-// 		path = "";
-// 	else
-// 		path = env[i][j];
-// 	// path_line = px_calloc(px_strlen(path) + 1, sizeof(char));
-// 	// px_strlcpy(path_line, &env[i][j], px_strlen(&env[i][j]) + 1);
-// 	data->path = px_split(path_line, ':');
-// 	//if ! split -> error and stop
-// }

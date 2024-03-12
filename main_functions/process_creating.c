@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:54:54 by ogoman            #+#    #+#             */
-/*   Updated: 2024/03/08 11:00:26 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/11 07:06:24 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	child_pid1(t_data *data)
 	process(data->av[1], data);
 }
 
+/*open second file, redirecting output and input for each child process. */
 void	child_pid2(t_data *data)
 {
 	data->file_out = open(data->av[3], O_RDWR | O_CREAT | O_TRUNC, 0664);
@@ -71,6 +72,7 @@ void	child_pid2(t_data *data)
 	process(data->av[2], data);
 }
 
+/*close pipes fd*/
 void	close_fd(t_data *data)
 {
 	close(data->fd[0]);

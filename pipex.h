@@ -6,7 +6,7 @@
 /*   By: ogoman <ogoman@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:31:10 by ogoman            #+#    #+#             */
-/*   Updated: 2024/03/08 10:53:39 by ogoman           ###   ########.fr       */
+/*   Updated: 2024/03/12 08:36:32 by ogoman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_data
 	int		status;
 }	t_data;
 
+int		px_strcmp(const char *s1, const char *s2);
+int		px_strncmp(const char *s1, const char *s2, size_t n);
 void	processes_making(t_data *data);
 void	process(char *cmd, t_data *data);
 void	main_errors(int error);
@@ -54,7 +56,6 @@ void	child_pid1(t_data *data);
 void	child_pid2(t_data *data);
 void	close_fd(t_data *data);
 void	px_bzero(void *s, size_t n);
-int		px_strncmp(const char *s1, const char *s2, size_t n);
 void	*px_calloc(size_t count, size_t size);
 char	*px_strjoin(char const *s1, char const *s2);
 char	*px_strdup(const char *s);
